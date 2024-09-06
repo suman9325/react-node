@@ -119,6 +119,9 @@ export default function GridWithFileDownload() {
     return (
         <React.Fragment>
             <Container sx={{ marginTop: '5rem' }}>
+                <div className='d-flex justify-content-between' style={{ marginBottom: '1rem' }}>
+                    <h3>Post Your Query</h3>
+                </div>
                 <Card className='p-5'>
                     <div className="d-flex mt-4 justify-content-between">
                         <TextField id="outlined-basic" label="Please Enter Your Query..." variant="outlined" style={{ width: '500px' }} value={feedback} onChange={(e) => setFeedback(e.target.value)} />
