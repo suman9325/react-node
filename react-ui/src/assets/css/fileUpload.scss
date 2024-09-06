@@ -1,0 +1,23 @@
+.preview-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  flex: 1 1 30%;
+  /* Adjust the percentage to fit 3 images per row */
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.preview-image img {
+  width: 100%;
+  height: auto;
+}
+
+.cancel-btn {
+  height: 1%;
+  border-radius: 20px;
+  background: inherit;
+  color: red;
+}
