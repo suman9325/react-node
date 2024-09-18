@@ -1,0 +1,197 @@
+.page-background + div {
+  position: relative;
+  z-index: 2;
+  top: 34px;
+  margin-bottom: 40px;
+}
+@media only screen and (max-width: 1300px) {
+  .container{
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  .container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px #262e381a;
+  border-radius: 20px;
+  background: #ffffff url('./assets/images/bg-img.svg') no-repeat center;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: auto;
+  background-size: cover;
+  background-position: -500px -200px;
+}
+
+.login-container .left {
+  width: 50%;
+  padding: 20px;
+  align-self: flex-start;
+}
+
+.logo {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.logo img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+img, svg {
+  vertical-align: middle;
+}
+
+.login-container .left .img-wrap {
+  width: 450px;
+  height: 450px;
+  margin: 0 auto;
+}
+@media only screen and (max-width: 1366px) {
+  .login-wrap .login-container .left .img-wrap {
+    width: 380px;
+    height: 380px;
+  }
+}
+@media only screen and (max-width: 1300px) {
+  .login-wrap .login-container .left .img-wrap {
+    width: 380px;
+    height: 380px;
+  }
+}
+
+
+.login-container .right {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.form-wrap {
+  width: 70%;
+}
+.flex{
+  display: flex;
+}
+.width40 {
+  width: 100%;
+}
+h4 {
+  color: #de702c;
+  margin-bottom: 16px;
+  font-weight: bold;
+  /* font-family: latobold; */
+}
+@media only screen and (max-width: 1300px) {
+  h4 {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  h4{
+    font-size: 18px;
+  }
+}
+
+h2 {
+  margin-bottom: 40px;
+}
+
+h2 {
+  margin-bottom: 40px;
+  font-weight: bold;
+  /* font-family: latobold; */
+}
+@media only screen and (max-width: 1300px) {
+  h2 {
+    font-size: 20px !important;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  h2{
+    font-size: 22px !important;
+  }
+}
+.form-group{
+  margin-bottom: 30px;
+}
+.error, .asterisk {
+  color: #c02926;
+}
+
+label {
+  display: inline-block;
+}
+.form-group label {
+  margin-bottom: 10px;
+  color: #626b76;
+  font-size: 16px;
+}
+
+.form-control{
+  border-radius: 10px;
+
+  /* padding: 12px 14px; */
+  font-size: 16px;
+  color: #2e3947;
+}
+@media only screen and (max-width: 1300px) {
+  .form-control, .form-group .ng-select .ng-select-container, .form-group .ng-select .ng-select-container {
+    font-size: 12px !important;
+    padding: 10px !important;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  .form-control, .form-group .ng-select .ng-select-container, .form-group .ng-select .ng-select-container {
+    font-size: 12px !important;
+    padding: 10px !important;
+  }
+}
+
+.link{
+  text-decoration: none;
+  color: #255ba1;
+  font-family: latobold;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 12px !important;
+}
+.text-transform-none {
+  text-transform: none;
+}
+
+@media only screen and (max-width: 1300px) {
+  h6, p, a {
+    font-size: 12px !important;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  h6, p, a {
+    font-size: 14px !important;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .btn {
+    font-size: 12px !important;
+    padding: 8px 32px;
+  }
+}
+/* login end */
