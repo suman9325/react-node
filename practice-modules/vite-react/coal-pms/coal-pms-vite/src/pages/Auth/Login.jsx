@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import MasterForm from "../../components/Forms/MasterForm";
 import ButtonWithLoader from "../../components/Buttons/ButtonWithLoader";
 
 export default function Login() {
@@ -40,7 +39,6 @@ export default function Login() {
                         <h3>Login Form</h3>
                     </div>
                     <div className="card-body">
-                        <MasterForm formFields={formFields} />
                     </div>
                 </div>
                 <div className="card-footer">
