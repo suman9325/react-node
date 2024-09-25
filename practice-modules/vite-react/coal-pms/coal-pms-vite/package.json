@@ -10,9 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.1",
+    "@mui/material": "^6.1.1",
+    "@mui/x-date-pickers": "^7.18.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "coal-pms-vite": "file:",
     "formik": "^2.4.6",
+    "material-react-table": "^3.0.1",
     "moment": "^2.30.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",

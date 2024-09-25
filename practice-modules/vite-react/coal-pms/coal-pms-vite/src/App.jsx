@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Login from './pages/Auth/Login'
 import Registrtation from './pages/Auth/Registration'
+import BasicTable from './pages/List/BasicTable'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,7 +12,8 @@ function App() {
   return (
     <>
       {/* <Login /> */}
-      <Registrtation />
+      {/* <Registrtation /> */}
+      <BasicTable/>
     </>
   )
 }

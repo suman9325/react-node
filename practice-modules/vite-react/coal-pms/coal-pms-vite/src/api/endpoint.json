@@ -1,0 +1,8 @@
+{
+    "Table": {
+        "Users": "users"
+    },
+    "Auth":{
+        "Registration": "registration"
+    }
+}
