@@ -5,6 +5,7 @@ import './App.css'
 import Login from './pages/Auth/Login'
 import Registrtation from './pages/Auth/Registration'
 import BasicTable from './pages/List/BasicTable'
+import DependableDropdown from './pages/Dropdowns/DependableDropdown'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +15,7 @@ function App() {
       {/* <Login /> */}
       {/* <Registrtation /> */}
       <BasicTable/>
+      {/* <DependableDropdown/> */}
     </>
   )
 }

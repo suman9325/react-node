@@ -1,8 +1,12 @@
 {
     "Table": {
-        "Users": "users"
+        "Users": "getAllUsers"
     },
     "Auth":{
         "Registration": "registration"
+    },
+    "Dropdown":{
+        "GetAllCountry": "getAllCountry",
+        "GetAllStateByCountry": "getAllStateByCountry"
     }
 }
