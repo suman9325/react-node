@@ -43,6 +43,7 @@ const enquiryController = require('./controllers/EnquiryController');
 
 // Routes
 app.get('/api/getAllusers', usersController.getAllUsers);
+app.post('/api/getFilteredUsers', usersController.getFilteredUsers);
 app.post('/api/createUser', usersController.insertUser);
 
 app.get('/api/getAllCountry', countryStateCityController.getAllCountry);

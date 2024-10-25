@@ -6,6 +6,9 @@ import Login from './pages/Auth/Login'
 import Registrtation from './pages/Auth/Registration'
 import BasicTable from './pages/List/BasicTable'
 import DependableDropdown from './pages/Dropdowns/DependableDropdown'
+import FilterTable from './pages/List/FilterTable'
+import SearchableDropdown from './pages/Dropdowns/SearchableDropdown'
+import List from './pages/List/List'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,8 +17,11 @@ function App() {
     <>
       {/* <Login /> */}
       {/* <Registrtation /> */}
-      <BasicTable/>
+      <BasicTable />
+      <List />
       {/* <DependableDropdown/> */}
+      {/* <FilterTable /> */}
+      {/* <SearchableDropdown/> */}
     </>
   )
 }

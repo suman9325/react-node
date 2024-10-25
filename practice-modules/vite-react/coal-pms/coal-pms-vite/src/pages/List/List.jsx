@@ -7,7 +7,7 @@ import { getAllUsersService } from '../../api/service/tableService';
 import { TOAST_TYPE, toastAlert } from '../../components/Toaster/toastify';
 import DataTable from '../../components/DataTable/DataTable';
 
-const BasicTable = () => {
+const List = () => {
 
   const [tableData, setTableData] = useState([]);
 
@@ -24,16 +24,11 @@ const BasicTable = () => {
   }, [])
 
   //should be memoized or stable
-  const columnData = useMemo(() =>
+  const columns = useMemo(() =>
     [
       {
         accessorKey: 'firstName', //access nested data with dot notation
         header: 'First Name',
-        size: 150,
-      },
-      {
-        accessorKey: 'lastName',
-        header: 'Last Name',
         size: 150,
       },
       {
@@ -47,7 +42,7 @@ const BasicTable = () => {
 
 
   const tableConfig = useMaterialReactTable({
-    columns: columnData,
+    columns,
     data: tableData, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
   });
 
@@ -58,4 +53,4 @@ const BasicTable = () => {
   );
 };
 
-export default BasicTable;
+export default List;

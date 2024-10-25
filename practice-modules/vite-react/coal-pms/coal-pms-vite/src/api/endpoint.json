@@ -1,6 +1,7 @@
 {
     "Table": {
-        "Users": "getAllUsers"
+        "Users": "getAllUsers",
+        "GetFilteredUsers":"getFilteredUsers"
     },
     "Auth":{
         "Registration": "registration"

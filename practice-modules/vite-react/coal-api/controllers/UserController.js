@@ -13,6 +13,47 @@ exports.getAllUsers = (req, res) => {
     });
 };
 
+// Get filtered users
+exports.getFilteredUsers = (req, res) => {
+
+    const cid = req.body.cid;
+    const sid = req.body.sid;
+
+    if (cid == '' || cid == null) {
+        pool.query('SELECT * FROM users', (error, results) => {
+            if (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+            const response = results.rows;
+            res.json({ success: true, data: response });
+        });
+    } else {
+        if (!!cid && (sid == '' || sid == null)) {
+            pool.query('SELECT * FROM users WHERE cid = $1', [cid], (error, results) => {
+                if (error) {
+                    console.error(error);
+                    return res.status(500).json({ message: 'Internal server error' });
+                }
+                const response = results.rows;
+                res.json({ success: true, data: response });
+            });
+        }
+        else {
+            pool.query('SELECT * FROM users WHERE cid = $1 AND sid = $2', [cid, sid], (error, results) => {
+
+                if (error) {
+                    console.error(error);
+                    return res.status(500).json({ message: 'Internal server error' });
+                }
+                const response = results.rows;
+                res.json({ success: true, data: response });
+            });
+        }
+    }
+
+};
+
 // Insert user
 
 exports.insertUser = (req, res) => {
