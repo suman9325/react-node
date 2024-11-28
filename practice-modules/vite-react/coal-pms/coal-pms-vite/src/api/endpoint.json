@@ -1,6 +1,5 @@
 {
     "Table": {
-        "Users": "getAllUsers",
         "GetFilteredUsers":"getFilteredUsers"
     },
     "Auth":{
@@ -9,5 +8,12 @@
     "Dropdown":{
         "GetAllCountry": "getAllCountry",
         "GetAllStateByCountry": "getAllStateByCountry"
+    },
+    "FileUpload":{
+        "UploadSingleFile": "uploadSingleFile"
+    },
+    "User": {
+        "AddUpdateUser": "addUpdateUser",
+        "GetUser": "getUser"
     }
 }

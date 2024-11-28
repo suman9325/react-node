@@ -17,8 +17,18 @@ const storage = multer.diskStorage({
     }
 });
 
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/fileUploads'); // Directory to save files
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); // Filename to save as
+    }
+});
+
 // Initialize multer with storage configuration
 const upload = multer({ storage: storage });
+const fileHandler = multer({ storage: fileStorage });
 
 // Create uploads directory if it doesn't exist (optional)
 
@@ -40,11 +50,12 @@ app.use(cors()); // Enable CORS for all routes
 const usersController = require('./controllers/UserController');
 const countryStateCityController = require('./controllers/CountryStateCityController');
 const enquiryController = require('./controllers/EnquiryController');
+const fileUploadController = require('./controllers/FileUploadController');
 
 // Routes
-app.get('/api/getAllusers', usersController.getAllUsers);
+app.post('/api/getUser', usersController.getUser);
 app.post('/api/getFilteredUsers', usersController.getFilteredUsers);
-app.post('/api/createUser', usersController.insertUser);
+app.post('/api/addUpdateUser', usersController.addUpdateUser);
 
 app.get('/api/getAllCountry', countryStateCityController.getAllCountry);
 app.post('/api/getAllStateByCountry', countryStateCityController.getAllStateByCountry);
@@ -56,6 +67,8 @@ app.post('/api/filterActiveInactiveEnquiry', enquiryController.filterActiveInact
 app.get('/api/getAllEnquiryDocuments', enquiryController.getAllEnquiryDocuments);
 app.post('/api/saveEnquiryDocument', upload.single('document'), enquiryController.saveEnquiryDocument);
 app.post('/api/downloadEnquiryDocument', enquiryController.downloadEnquiryDocument);
+
+app.post('/api/uploadSingleFile', fileHandler.single('document'), fileUploadController.uploadSingleFile)
 
 // Middleware
 
