@@ -2,7 +2,7 @@ import { axiosInstance } from "../axiosInstance";
 import Endpoint from '../endpoint.json'
 
 export const getAllUsersService = async () => {
-    const res = await axiosInstance.get(Endpoint.Table.Users);
+    const res = await axiosInstance.post(Endpoint.User.GetUser);
     return await (res).data;
 }
 

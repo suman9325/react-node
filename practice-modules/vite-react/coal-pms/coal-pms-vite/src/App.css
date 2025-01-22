@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -39,4 +39,36 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Highlight the table header */
+th {
+  background-color: #aaa; /* Darker gray color for header */
+  padding: 10px; /* Add padding to header cells */
+  text-align: left; /* Align text to the left */
+}
+
+/* Stripe color for alternating rows */
+tr:nth-child(odd) {
+  background-color: #e6e6e6; /* Slightly darker striped color for odd rows */
+}
+
+tr:nth-child(even) {
+  background-color: #f5f5f5; /* Slightly darker white color for even rows */
+}
+
+/* Optional: Add hover effect for table rows */
+tr:hover {
+  background-color: #cccccc; /* Darker gray color on row hover */
+}
+
+/* Optional: Add borders to table */
+table {
+  border-collapse: collapse; /* Ensures borders do not collapse into each other */
+  width: 100%; /* Make table take full width */
+}
+
+th, td {
+  border: 1px solid #bbb; /* Darker border color */
+  padding: 10px; /* Padding for better readability */
 }

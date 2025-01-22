@@ -5,11 +5,13 @@ import "./dropdown.scss";
 
 const SearchableDropdown = () => {
     const [countryList, setCountryList] = useState([]);
+    const [filteredStateList, setfilteredStateList] = useState([]);
 
     useEffect(() => {
         getAllCountryService().then(res => {
-            const { success, data } = res.data
+            const { success, data } = res
             if (success) {
+                
                 const updatedData = data.map(item => {
                     return {
                         value: item.cid,
@@ -28,9 +30,33 @@ const SearchableDropdown = () => {
     }, [])
 
     const onCountryChange = (val) => {
-        console.log(val);
-
-    }
+            setfilteredStateList([]);
+            if (!!val) {
+                // setSelectedCountry(val);
+                // formikObj.setFieldValue('cid', val.value);
+                // formikObj.setFieldValue('cname', val.label);
+                getAllStateByCountryService({ cid: val.value }).then(res => {
+                    const { success, data } = res
+                    if (success) {
+                        const updatedData = data.map(item => {
+                            return {
+                                value: item.id,
+                                label: item.name
+                            }
+                        })
+                        setfilteredStateList(updatedData);
+                    } else {
+                    }
+    
+                })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+            else {
+                setfilteredStateList([]);
+            }
+        }
 
     return (
         <>

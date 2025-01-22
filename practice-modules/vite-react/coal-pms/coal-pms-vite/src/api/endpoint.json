@@ -1,19 +1,32 @@
 {
     "Table": {
-        "GetFilteredUsers":"getFilteredUsers"
+        "GetFilteredUsers": "getFilteredUsers"
     },
-    "Auth":{
+    "Auth": {
         "Registration": "registration"
     },
-    "Dropdown":{
+    "Dropdown": {
         "GetAllCountry": "getAllCountry",
-        "GetAllStateByCountry": "getAllStateByCountry"
+        "GetAllStateByCountry": "getAllStateByCountry",
+        "AddUpdateCountryState": "addUpdateCountryState",
+        "GetCountryState": "getCountryState",
+        "GetAllLocations": "getAllLocations",
+        "DeleteLocation": "deleteLocation"
     },
-    "FileUpload":{
-        "UploadSingleFile": "uploadSingleFile"
+    "FileUpload": {
+        "UploadFile": "uploadFile",
+        "GetAllFiles": "getAllFiles"
     },
     "User": {
         "AddUpdateUser": "addUpdateUser",
-        "GetUser": "getUser"
+        "GetUser": "getUser",
+        "SearchUser": "searchUser"
+    },
+    "Editor": {
+        "GetAllFields": "getAllFields"
+    },
+    "Template":{
+        "AddUpdateTemplate":"addUpdateTemplate",
+        "GetTamplate": "getTamplate"
     }
 }

@@ -45,7 +45,7 @@ exports.getFilteredUsers = (req, res) => {
 // Insert user
 
 exports.addUpdateUser = (req, res) => {
-    
+
     let values;
     let query;
     if ('id' in req.body) {
@@ -142,6 +142,21 @@ exports.getUser = (req, res) => {
         });
     }
 
+};
+
+exports.searchUser = (req, res) => {
+    const searchParam = req.body.searchParam;
+    if (!!searchParam) {
+        pool.query('SELECT * FROM tbl_add_user WHERE name LIKE $1', [`%${searchParam}%`], (error, results) => {
+            if (error) {
+                return res.status(200).json({ message: 'No Record Found' });
+            }
+            const response = results.rows;
+            return res.status(200).json({ success: true, data: response });
+        });
+    } else {
+        return res.status(400).json({ message: 'Search text missing' });
+    }
 };
 
 

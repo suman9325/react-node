@@ -45,20 +45,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(express.json()); // Parse JSON bodies
 app.use(cors()); // Enable CORS for all routes
+// Serve static files from the 'uploads' folder
+app.use('/uploads', express.static('uploads'));
 
 // controllers declaration
 const usersController = require('./controllers/UserController');
 const countryStateCityController = require('./controllers/CountryStateCityController');
 const enquiryController = require('./controllers/EnquiryController');
 const fileUploadController = require('./controllers/FileUploadController');
+const editorController = require('./controllers/EditorController');
+const templateController = require('./controllers/TemplateController');
 
 // Routes
 app.post('/api/getUser', usersController.getUser);
 app.post('/api/getFilteredUsers', usersController.getFilteredUsers);
 app.post('/api/addUpdateUser', usersController.addUpdateUser);
+app.post('/api/searchUser', usersController.searchUser);
 
 app.get('/api/getAllCountry', countryStateCityController.getAllCountry);
 app.post('/api/getAllStateByCountry', countryStateCityController.getAllStateByCountry);
+app.post('/api/addUpdateCountryState', countryStateCityController.addUpdateCountryState);
+app.post('/api/getCountryState', countryStateCityController.getCountryState);
+app.get('/api/getAllLocations', countryStateCityController.getAllLocations);
+app.post('/api/deleteLocation', countryStateCityController.deleteLocation);
 
 app.get('/api/getAllEnquiry', enquiryController.getAllEnquiry);
 app.post('/api/activeInactiveEnquiry', enquiryController.activeInactiveEnquiry);
@@ -68,7 +77,15 @@ app.get('/api/getAllEnquiryDocuments', enquiryController.getAllEnquiryDocuments)
 app.post('/api/saveEnquiryDocument', upload.single('document'), enquiryController.saveEnquiryDocument);
 app.post('/api/downloadEnquiryDocument', enquiryController.downloadEnquiryDocument);
 
-app.post('/api/uploadSingleFile', fileHandler.single('document'), fileUploadController.uploadSingleFile)
+app.post(
+    '/api/uploadFile',
+    fileHandler.array('documents', 10), // Allows up to 10 files with the field name "documents"
+    fileUploadController.uploadFile
+);
+app.post('/api/getAllFiles', fileUploadController.getAllFiles);
+app.get('/api/getAllFields', editorController.getAllFields);
+app.post('/api/addUpdateTemplate', templateController.addUpdateTemplate);
+app.post('/api/getTamplate', templateController.getTamplate);
 
 // Middleware
 

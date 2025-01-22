@@ -29,18 +29,18 @@ const TableCheckbox = () => {
   const columnData = useMemo(() =>
     [
       {
-        accessorKey: 'firstName', //access nested data with dot notation
+        accessorKey: 'name', //access nested data with dot notation
         header: 'First Name',
-        size: 150,
-      },
-      {
-        accessorKey: 'lastName',
-        header: 'Last Name',
         size: 150,
       },
       {
         accessorKey: 'email', //normal accessorKey
         header: 'Email',
+        size: 200,
+      },
+      {
+        accessorKey: 'contact', //normal accessorKey
+        header: 'Contact',
         size: 200,
       },
     ],
@@ -57,16 +57,21 @@ const TableCheckbox = () => {
 
   useEffect(() => {
     console.log('Selected rows:', tableConfig.getSelectedRowModel().flatRows.map((row) => row.original));
-    const rowIds = (tableConfig.getSelectedRowModel().flatRows.map((row) => row.original)).map(item => {return item.id});
-    setRowIds(rowIds.join());
+    const rowIds = (tableConfig.getSelectedRowModel().flatRows.map((row) => row.original)).map(item => {return item.id}).join();
+    setRowIds(rowIds);
   }, [tableConfig.getState().rowSelection]);
 
   const submitForm = () => {
-    setIsLoading(true);
-    console.log(rowIds);
-    setTimeout(() => {
-        setIsLoading(false);
-    }, 3000);
+    if (rowIds==''){
+      toastAlert(TOAST_TYPE.ERROR, 'Please Select at least one row');
+    }
+    else {
+      setIsLoading(true);
+      console.log(rowIds);
+      setTimeout(() => {
+          setIsLoading(false);
+      }, 3000);
+    }
 
   }
 

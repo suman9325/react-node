@@ -1,13 +1,29 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { Button, Card, CardBody, CardFooter, CardHeader, Col, Container, Row, Stack } from "react-bootstrap";
 import { TOAST_TYPE, toastAlert } from '../../components/Toaster/toastify';
-import { uploadSingleFileService } from '../../api/service/fileUploadService';
+import { uploadFileService } from '../../api/service/fileUploadService';
+import { useFormik } from "formik";
+
+const initialFormValues = {
+    category: '',
+    is_default: 0
+}
 
 const SingleFileUpload = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
     const supportedFile = ['image/jpeg', 'image/jpg', 'image/png']
     const maxFileSize = 50000; //bytes
+
+    const formikObj = useFormik({
+        enableReinitialize: true,
+        initialValues: initialFormValues,
+    })
+
+    const toggleCheck = (e) => {
+        const { value, checked } = e.target;
+        checked ? formikObj.setFieldValue('is_default', 1) : formikObj.setFieldValue('is_default', 0)
+    }
 
     const getFile = (e) => {
         const inputFile = e.target.files[0];
@@ -28,11 +44,20 @@ const SingleFileUpload = () => {
     }
 
     const uploadFile = () => {
-        console.log("File uploaded", selectedFile);
         const formData = new FormData();
-        formData.append('myFile', selectedFile);
-        uploadSingleFileService(formData).then(res => {
-
+        formData.append('documents', selectedFile);
+        formData.append('category', formikObj.values.category);
+        formData.append('is_default', formikObj.values.is_default);
+        uploadFileService(formData).then(res => {
+            const { success, message } = res
+            if (success) {
+                setSelectedFile([]);
+                fileInputRef.current.value = '';
+                toastAlert(TOAST_TYPE.SUCCESS, message);
+            }
+            else {
+                toastAlert(TOAST_TYPE.ERROR, message);
+            }
         })
     }
 
@@ -44,9 +69,31 @@ const SingleFileUpload = () => {
                         <h5>Single File Upload</h5>
                     </CardHeader>
                     <CardBody>
-                        <input type='file' onChange={getFile} ref={fileInputRef} />
+                        <div className='row'>
+                            <div className='col-sm-6'>
+                                <label>Category</label>
+                                <input type='text' name='category' className='form-control' onChange={formikObj.handleChange} />
+                            </div>
+                            <div className='col-sm-6'>
+                                <label>Is Default</label>
+                                <input type='checkbox' name='is_default' className="form-check-input" onChange={toggleCheck} />
+                            </div>
+                        </div>
+                        <div className='row mt-3'>
+                            <input type='file' className='form-control' onChange={getFile} ref={fileInputRef} />
+                        </div>
+                        <div className='row mt-3'>
+                            {/* Preview for Images */}
+                            {selectedFile?.type?.startsWith("image/") && (
+                                <img
+                                    src={URL.createObjectURL(selectedFile)}
+                                    alt="Preview"
+                                    style={{ width: "200px", marginTop: "10px" }}
+                                />
+                            )}
+                        </div>
                     </CardBody>
-                    <CardFooter className='d-flex justify-content-end'>
+                    <CardFooter className='d-flex justify-content-center'>
                         <Button variant="primary" onClick={uploadFile} disabled={selectedFile === null}>Upload</Button>
                     </CardFooter>
                 </Card>
