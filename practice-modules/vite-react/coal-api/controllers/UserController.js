@@ -44,64 +44,138 @@ exports.getFilteredUsers = (req, res) => {
 
 // Insert user
 
+// exports.addUpdateUser = (req, res) => {
+
+//     let values;
+//     let query;
+//     if ('id' in req.body) {
+//         values = [
+//             req.body.id,
+//             req.body.name,
+//             req.body.email,
+//             req.body.password, // Ensure this is hashed
+//             req.body.contact,
+//             req.body.gender,
+//             req.body.language,
+//             req.body.address,
+//             req.body.dob,
+//             req.body.country,
+//         ];
+//         query = `
+//         UPDATE tbl_add_user
+//         SET 
+//             name = $2,
+//             email = $3,
+//             password = $4,
+//             contact = $5,
+//             gender = $6,
+//             language = $7,
+//             address = $8,
+//             dob = $9,
+//             country = $10
+//         WHERE id = $1
+//     `;
+//     }
+//     else {
+//         values = [
+//             req.body.name,
+//             req.body.email,
+//             req.body.password, // Ensure this is hashed
+//             req.body.contact,
+//             req.body.gender,
+//             req.body.language,
+//             req.body.address,
+//             req.body.dob,
+//             req.body.country,
+//         ];
+//         query = `
+//             INSERT INTO tbl_add_user 
+//             (
+//                 name, 
+//                 email, 
+//                 password, 
+//                 contact, 
+//                 gender,
+//                 language,
+//                 address, 
+//                 dob, 
+//                 country 
+//             ) 
+//             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
+//             RETURNING id
+//         `;
+//     }
+
+//     pool.query(query, values, (error, result) => {
+//         if (error) {
+//             return res.status(500).json({ success: false, message: 'Something Went Wrong!', error: error });
+//         } else {
+//             if ('id' in req.body)
+//                 return res.status(200).json({ success: true, message: 'User Updated Successfully' });
+//             else
+//                 return res.status(200).json({ success: true, message: 'User Added Successfully', userId: result.rows[0].id });
+//         }
+//     });
+// };
+
 exports.addUpdateUser = (req, res) => {
+    console.log("Received Data:", req.body);
+    console.log("Received File:", req.file);
+
+    if (!req.body.name || !req.body.email) {
+        return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
 
     let values;
     let query;
+    const avatarPath = req.file ? `uploads/user_avatar/${req.file.filename}` : null;
+
     if ('id' in req.body) {
         values = [
             req.body.id,
             req.body.name,
             req.body.email,
-            req.body.password, // Ensure this is hashed
+            req.body.password,
             req.body.contact,
             req.body.gender,
             req.body.language,
             req.body.address,
             req.body.dob,
             req.body.country,
+            avatarPath
         ];
         query = `
-        UPDATE tbl_add_user
-        SET 
-            name = $2,
-            email = $3,
-            password = $4,
-            contact = $5,
-            gender = $6,
-            language = $7,
-            address = $8,
-            dob = $9,
-            country = $10
-        WHERE id = $1
-    `;
-    }
-    else {
+            UPDATE tbl_add_user
+            SET 
+                name = $2,
+                email = $3,
+                password = $4,
+                contact = $5,
+                gender = $6,
+                language = $7,
+                address = $8,
+                dob = $9,
+                country = $10,
+                avatar = COALESCE($11, avatar)
+            WHERE id = $1
+        `;
+    } else {
         values = [
             req.body.name,
             req.body.email,
-            req.body.password, // Ensure this is hashed
+            req.body.password,
             req.body.contact,
             req.body.gender,
             req.body.language,
             req.body.address,
             req.body.dob,
             req.body.country,
+            avatarPath
         ];
         query = `
             INSERT INTO tbl_add_user 
-            (
-                name, 
-                email, 
-                password, 
-                contact, 
-                gender,
-                language,
-                address, 
-                dob, 
-                country 
-            ) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
+            (name, email, password, contact, gender, language, address, dob, country, avatar) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
             RETURNING id
         `;
     }
@@ -110,13 +184,15 @@ exports.addUpdateUser = (req, res) => {
         if (error) {
             return res.status(500).json({ success: false, message: 'Something Went Wrong!', error: error });
         } else {
-            if ('id' in req.body)
-                return res.status(200).json({ success: true, message: 'User Updated Successfully' });
-            else
-                return res.status(200).json({ success: true, message: 'User Added Successfully', userId: result.rows[0].id });
+            return res.status(200).json({
+                success: true,
+                message: 'User Added/Updated Successfully',
+                userId: result.rows[0]?.id
+            });
         }
     });
 };
+
 
 exports.getUser = (req, res) => {
 
@@ -151,7 +227,13 @@ exports.searchUser = (req, res) => {
             if (error) {
                 return res.status(200).json({ message: 'No Record Found' });
             }
-            const response = results.rows;
+            const response = results.rows.map((file) => {
+                const fullPath = `${file.avatar.replace(/\\/g, '/')}`; // Replace backslashes with forward slashes
+                return {
+                    ...file,
+                    avatar: fullPath, // Add fullPath to each file object
+                };
+            });
             return res.status(200).json({ success: true, data: response });
         });
     } else {

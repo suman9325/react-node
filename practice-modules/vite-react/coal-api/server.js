@@ -26,9 +26,31 @@ const fileStorage = multer.diskStorage({
     }
 });
 
+const userAvatarStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/user_avatar'); // Directory to save files
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); // Filename to save as
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    const allowedMimeTypes = [
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ];
+    if (allowedMimeTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Unsupported file type'), false);
+    }
+};
+
 // Initialize multer with storage configuration
-const upload = multer({ storage: storage });
-const fileHandler = multer({ storage: fileStorage });
+const upload = multer({ storage: storage, fileFilter });
+const fileHandler = multer({ storage: fileStorage, fileFilter });
+const userAvatarHandler = multer({ storage: userAvatarStorage, fileFilter });
 
 // Create uploads directory if it doesn't exist (optional)
 
@@ -59,7 +81,7 @@ const templateController = require('./controllers/TemplateController');
 // Routes
 app.post('/api/getUser', usersController.getUser);
 app.post('/api/getFilteredUsers', usersController.getFilteredUsers);
-app.post('/api/addUpdateUser', usersController.addUpdateUser);
+app.post('/api/addUpdateUser', userAvatarHandler.single('avatar'), usersController.addUpdateUser);
 app.post('/api/searchUser', usersController.searchUser);
 
 app.get('/api/getAllCountry', countryStateCityController.getAllCountry);
