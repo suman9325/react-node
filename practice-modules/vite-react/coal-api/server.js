@@ -39,6 +39,9 @@ const fileFilter = (req, file, cb) => {
     const allowedMimeTypes = [
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'image/jpeg',
+        'image/png',
+        'application/pdf'
     ];
     if (allowedMimeTypes.includes(file.mimetype)) {
         cb(null, true);

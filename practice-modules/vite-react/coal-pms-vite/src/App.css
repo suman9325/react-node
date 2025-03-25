@@ -43,7 +43,7 @@
 
 /* Highlight the table header */
 th {
-  background-color: #aaa; /* Darker gray color for header */
+  background-color: #4ebaec; /* Darker gray color for header */
   padding: 10px; /* Add padding to header cells */
   text-align: left; /* Align text to the left */
 }

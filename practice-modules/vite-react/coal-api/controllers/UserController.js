@@ -130,7 +130,7 @@ exports.addUpdateUser = (req, res) => {
     let query;
     const avatarPath = req.file ? `uploads/user_avatar/${req.file.filename}` : null;
 
-    if ('id' in req.body) {
+    if ('id' in req.body && (req.body.id !== null || req.body.id !== "")) {
         values = [
             req.body.id,
             req.body.name,
@@ -139,10 +139,11 @@ exports.addUpdateUser = (req, res) => {
             req.body.contact,
             req.body.gender,
             req.body.language,
+            avatarPath,
+            req.body.cid,
+            req.body.sid,
             req.body.address,
             req.body.dob,
-            req.body.country,
-            avatarPath
         ];
         query = `
             UPDATE tbl_add_user
@@ -153,10 +154,11 @@ exports.addUpdateUser = (req, res) => {
                 contact = $5,
                 gender = $6,
                 language = $7,
-                address = $8,
-                dob = $9,
-                country = $10,
-                avatar = COALESCE($11, avatar)
+                avatar = COALESCE($8, avatar),
+                cid = $9,
+                sid = $10,
+                address = $11,
+                dob = $12,
             WHERE id = $1
         `;
     } else {
@@ -167,15 +169,16 @@ exports.addUpdateUser = (req, res) => {
             req.body.contact,
             req.body.gender,
             req.body.language,
+            avatarPath,
+            req.body.cid,
+            req.body.sid,
             req.body.address,
             req.body.dob,
-            req.body.country,
-            avatarPath
         ];
         query = `
             INSERT INTO tbl_add_user 
-            (name, email, password, contact, gender, language, address, dob, country, avatar) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
+            (name, email, password, contact, gender, language, avatar, cid, sid, address, dob) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) 
             RETURNING id
         `;
     }
