@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/practice-modules/resource-manager/.vs/slnx.sqlite
+/practice-modules/resource-manager/.vs/resource-manager/FileContentIndex
