@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "flatpickr/dist/themes/material_green.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { Bounce, ToastContainer } from 'react-toastify';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

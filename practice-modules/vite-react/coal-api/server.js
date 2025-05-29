@@ -83,9 +83,14 @@ const templateController = require('./controllers/TemplateController');
 
 // Routes
 app.post('/api/getUser', usersController.getUser);
+app.post('/api/getActiveInactiveUser', usersController.getActiveInactiveUser);
 app.post('/api/getFilteredUsers', usersController.getFilteredUsers);
 app.post('/api/addUpdateUser', userAvatarHandler.single('avatar'), usersController.addUpdateUser);
 app.post('/api/searchUser', usersController.searchUser);
+app.post('/api/toggleActiveInactiveUser', usersController.toggleActiveInactiveUser);
+app.post('/api/updateActiveInactiveUser', usersController.updateActiveInactiveUser);
+app.post('/api/getPayslipList', usersController.getPayslipList);
+app.post('/api/getInterest', usersController.getInterest);
 
 app.get('/api/getAllCountry', countryStateCityController.getAllCountry);
 app.post('/api/getAllStateByCountry', countryStateCityController.getAllStateByCountry);

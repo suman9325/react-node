@@ -72,6 +72,13 @@ export default function HorizontalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  React.useEffect(()=>{
+    if (activeStep == 2){
+      console.log('api call');
+      
+    }
+  },[activeStep])
+
   return (
     <Box sx={{ width: 1000 }}>
       <Stepper activeStep={activeStep}>

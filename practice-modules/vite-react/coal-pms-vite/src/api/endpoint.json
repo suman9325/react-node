@@ -20,7 +20,12 @@
     "User": {
         "AddUpdateUser": "addUpdateUser",
         "GetUser": "getUser",
-        "SearchUser": "searchUser"
+        "SearchUser": "searchUser",
+        "GetActiveInactiveUser": "getActiveInactiveUser",
+        "ToggleActiveInactiveUser": "toggleActiveInactiveUser",
+        "UpdateActiveInactiveUser": "updateActiveInactiveUser",
+        "GetPayslipList": "getPayslipList",
+        "GetInterest": "getInterest"
     },
     "Editor": {
         "GetAllFields": "getAllFields"

@@ -38,7 +38,7 @@ export const pageRoutes = [
     // DROPDOWNS
     {
         path: '/autocomplete-box',
-        label: 'Autocomplete Box',
+        label: 'Autocomplete Box (Debounce)',
         icon: <SystemUpdateAltIcon/>,
         element: lazy(() => import('./pages/Dropdowns/AutocompleteBox')),
     },
@@ -93,6 +93,18 @@ export const pageRoutes = [
         icon: <CloudDownloadIcon/>,
         element: lazy(() => import('./pages/FileUpload/ExcelViewUpload')),
     },
+    {
+        path: '/drag-drop-file',
+        label: 'Drag-Drop File',
+        icon: <CloudDownloadIcon/>,
+        element: lazy(() => import('./pages/FileUpload/DragDropFile')),
+    },
+    {
+        path: '/image-crop-file',
+        label: 'Image Crop File',
+        icon: <CloudDownloadIcon/>,
+        element: lazy(() => import('./pages/FileUpload/ImageCrop')),
+    },
 
     // List
 
@@ -110,9 +122,15 @@ export const pageRoutes = [
     },
     {
         path: '/list',
-        label: 'List',
+        label: 'List (Export to Excel)',
         icon: <TableViewIcon/>,
         element: lazy(() => import('./pages/List/List')),
+    },
+    {
+        path: '/list-switch',
+        label: 'Switch',
+        icon: <TableViewIcon/>,
+        element: lazy(() => import('./pages/List/Switch')),
     },
     {
         path: '/single-checkbox-table',
@@ -143,6 +161,12 @@ export const pageRoutes = [
         label: 'Column Sum',
         icon: <TableViewIcon/>,
         element: lazy(() => import('./pages/List/ColumnSum')),
+    },
+    {
+        path: '/payslip',
+        label: 'Payslip',
+        icon: <TableViewIcon/>,
+        element: lazy(() => import('./pages/List/Payslip')),
     },
 
     // User
@@ -183,6 +207,13 @@ export const pageRoutes = [
         label: 'Basic Tab',
         icon: <Person3Icon/>,
         element: lazy(() => import('./pages/Tabs/TabView')),
+    },
+    // Accordion
+    {
+        path: '/basic-accordion',
+        label: 'Basic Accordion',
+        icon: <Person3Icon/>,
+        element: lazy(() => import('./pages/Accordion/AccordionPage')),
     },
 
     // Test Run

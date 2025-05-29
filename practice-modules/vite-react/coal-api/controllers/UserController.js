@@ -226,22 +226,128 @@ exports.getUser = (req, res) => {
 exports.searchUser = (req, res) => {
     const searchParam = req.body.searchParam;
     if (!!searchParam) {
-        pool.query('SELECT * FROM tbl_add_user WHERE name LIKE $1', [`%${searchParam}%`], (error, results) => {
+        pool.query('SELECT * FROM tbl_add_user WHERE name ILIKE $1', [`%${searchParam}%`], (error, results) => {
             if (error) {
+                console.error("Database error:", error);
+                return res.status(500).json({ message: 'Internal Server Error' });
+            }
+
+            if (results.rows.length === 0) {
                 return res.status(200).json({ message: 'No Record Found' });
             }
+
             const response = results.rows.map((file) => {
-                const fullPath = `${file.avatar.replace(/\\/g, '/')}`; // Replace backslashes with forward slashes
                 return {
                     ...file,
-                    avatar: fullPath, // Add fullPath to each file object
+                    avatar: file.avatar ? file.avatar.replace(/\\/g, '/') : null // Handle null avatar
                 };
             });
+
             return res.status(200).json({ success: true, data: response });
         });
+
     } else {
         return res.status(400).json({ message: 'Search text missing' });
     }
 };
 
 
+exports.getActiveInactiveUser = (req, res) => {
+
+    const isActiveInactive = req.body.isActive;
+
+    pool.query('SELECT * FROM tbl_user WHERE "isActive" = $1', [isActiveInactive], (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+        const response = results.rows;
+        res.json({ success: true, data: response });
+    });
+
+
+};
+
+exports.toggleActiveInactiveUser = (req, res) => {
+    const id = req.body.id;
+
+    pool.query('SELECT isActive FROM tbl_user WHERE id = $1', [id], (error, results) => {
+        if (error) {
+            console.error('Error fetching user:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+
+        if (results.rows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const currentStatus = results.rows[0].isactive;
+        const newStatus = !currentStatus;
+
+        pool.query('UPDATE tbl_user SET isActive = $1 WHERE id = $2 RETURNING *', [newStatus, id], (updateError, updateResults) => {
+            if (updateError) {
+                console.error('Error updating user:', updateError);
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+
+            const updatedUser = updateResults.rows[0];
+            res.json({ success: true, data: updatedUser });
+        });
+    });
+};
+
+exports.updateActiveInactiveUser = (req, res) => {
+    const id = req.body.id;
+    const isActive = req.body.isActive;
+    pool.query('UPDATE tbl_user SET "isActive" = $1 WHERE id = $2 RETURNING *', [isActive, id], (updateError, updateResults) => {
+        if (updateError) {
+            console.error('Error updating user:', updateError);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+
+        const updatedUser = updateResults.rows;
+        res.json({ success: true, data: updatedUser });
+    });
+}
+
+
+exports.getPayslipList = (req, res) => {
+
+    pool.query('SELECT * FROM tbl_sum', (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+        const response = results.rows;
+        res.json({ success: true, data: response });
+    });
+
+};
+
+exports.getInterest = (req, res) => {
+    let idString = req.body.id;
+
+    if (!idString || typeof idString !== 'string') {
+        return res.status(400).json({ message: 'ID must be a comma-separated string' });
+    }
+
+    const ids = idString.split(',').map(num => parseInt(num.trim())).filter(Boolean);
+
+    if (ids.length === 0) {
+        return res.status(400).json({ message: 'No valid IDs found' });
+    }
+
+    pool.query(
+        'SELECT SUM(interest) AS total_interest FROM tbl_sum WHERE id = ANY($1)',
+        [ids],
+        (error, results) => {
+            if (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+
+            const totalInterest = results.rows[0]?.total_interest || 0;
+            res.json({ success: true, totalInterest });
+        }
+    );
+};

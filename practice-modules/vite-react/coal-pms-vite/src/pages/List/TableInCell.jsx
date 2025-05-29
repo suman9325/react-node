@@ -84,7 +84,7 @@ const TableInCell = () => {
     const [tableData, setTableData] = useState(jsonData);
     const [rowData, setRowData] = useState(null);
     const [nextTableData, setNextTableData] = useState([]);
-    const [textBoxData, setTextBoxData]= useState();
+    const [textBoxData, setTextBoxData] = useState();
 
     //should be memoized or stable
     const columnData = useMemo(() =>
@@ -185,43 +185,87 @@ const TableInCell = () => {
             <div className='d-flex justify-content-end mb-4'>
                 <Button style={{ width: '200px', marginTop: 20 }} onClick={validateRowData}>Submit</Button>
             </div>
-            <div className='card'>
-                <table className='table table-striped table-sm'>
-                    <thead style={{ backgroundColor: 'skyblue' }}>
-                        <tr>
-                            <th className='text-center'><b>Select</b></th>
-                            <th className='text-center'><b>Payment Head</b></th>
-                            <th className='text-center'><b>Actual Amount</b></th>
-                            <th className='text-center'><b>Payable Amount</b></th>
-                            <th className='text-center'><b>TCS %</b></th>
-                            <th className='text-center'><b>Due Date</b></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {nextTableData?.installList?.map((item, index) => (
-                            <tr key={index}>
-                                <td className='text-center'>
-                                    <Checkbox
-                                        checked={index === 0}
-                                        disabled={index !== 0}
-                                    />
-                                </td>
-                                <td className='text-center'>{item.payment_Head}</td>
-                                <td className='text-center'>{item.actual_Calc_Amount}</td>
-                                <td className='text-center'>{item.payable_Calc_Amount}</td>
-                                <td className='text-center'>{item.tcsPer}</td>
-                                <td className='text-center'>{item.due_Date}</td>
+            {nextTableData?.installList?.length > 0 &&
+                <div>
+                    <div className='card'>
+                        <table className='table table-striped table-sm'>
+                            <thead style={{ backgroundColor: 'skyblue' }}>
+                                <tr>
+                                    <th className='text-center'><b>Select</b></th>
+                                    <th className='text-center'><b>Payment Head</b></th>
+                                    <th className='text-center'><b>Actual Amount</b></th>
+                                    <th className='text-center'><b>Payable Amount</b></th>
+                                    <th className='text-center'><b>TCS %</b></th>
+                                    <th className='text-center'><b>Due Date</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {nextTableData?.installList?.map((item, index) => (
+                                    <tr key={index}>
+                                        <td className='text-center'>
+                                            <Checkbox
+                                                checked={index === 0}
+                                                disabled={index !== 0}
+                                            />
+                                        </td>
+                                        <td className='text-center'>{item.payment_Head}</td>
+                                        <td className='text-center'>{item.actual_Calc_Amount}</td>
+                                        <td className='text-center'>{item.payable_Calc_Amount}</td>
+                                        <td className='text-center'>{item.tcsPer}</td>
+                                        <td className='text-center'>{item.due_Date}</td>
 
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className='d-flex justify-content-end mb-4'>
-                <Button style={{ width: '200px', marginTop: 20 }}>Cont</Button>
-            </div>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className='d-flex justify-content-end mb-4'>
+                        <Button style={{ width: '200px', marginTop: 20 }}>Cont</Button>
+                    </div>
+                    {/* <input type='text' value={textBoxData?.payable_Calc_Amount} /> */}
 
-            <input type='text' value={textBoxData?.payable_Calc_Amount}/>
+                    <h3>next table</h3>
+                    <div className='card'>
+                        <table className='table table-striped table-sm'>
+                            <thead style={{ backgroundColor: 'skyblue' }}>
+                                <tr>
+                                    <th className='text-center'><b>Select</b></th>
+                                    <th className='text-center'><b>Payment Head</b></th>
+                                    <th className='text-center'><b>Actual Amount</b></th>
+                                    <th className='text-center'><b>Payable Amount</b></th>
+                                    <th className='text-center'><b>TCS %</b></th>
+                                    <th className='text-center'><b>Due Date</b></th>
+                                    <th className='text-center'><b>Allocated Amount</b></th>
+                                    <th className='text-center'><b>Left Amount</b></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {nextTableData?.installList?.map((item, index) => (
+                                    <tr key={index}>
+                                        <td className='text-center'>
+                                            <Checkbox
+                                                checked={index === 0}
+                                                disabled={index !== 0}
+                                            />
+                                        </td>
+                                        <td className='text-center'>{item.payment_Head}</td>
+                                        <td className='text-center'>{item.actual_Calc_Amount}</td>
+                                        <td className='text-center'>{item.payable_Calc_Amount}</td>
+                                        <td className='text-center'>{item.tcsPer}</td>
+                                        <td className='text-center'>{item.due_Date}</td>
+                                        {/* <td className='text-center'>{ index == 0 ? formikobj.values.allo_amt : '88888'}</td> */}
+                                        <td className='text-center'>{ index == 0 ? 100 : 888}</td>
+                                        <td className='text-center'>{index == 0 ? (item.actual_Calc_Amount- 100) : 888}</td>
+
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+
         </Fragment>
     );
 };

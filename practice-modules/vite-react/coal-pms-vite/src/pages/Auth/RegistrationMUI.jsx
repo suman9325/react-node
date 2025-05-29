@@ -12,6 +12,7 @@ import { registerUserService } from "../../api/service/authService";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import ConfirmDialog from "../../components/Dialog/ConfirmDialog";
 
 // Initial form values
 const initialFormValues = {
@@ -45,25 +46,30 @@ const validationSchema = Yup.object({
 
 export default function RegistrationMUI() {
     const [isLoading, setIsLoading] = useState(false);
+    const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
     const formikObj = useFormik({
         enableReinitialize: true,
         initialValues: initialFormValues,
         validationSchema, // Attach the Yup validation schema
         onSubmit: (values) => {
-            setIsLoading(true);
             values = { ...values, language: values.language.join(",") };
             console.log("Form Values", values);
-            registerUserService(values)
-                .then((res) => {
-                    if (res.success) {
-                        alert("Registration Successful");
-                    }
-                })
-                .catch((err) => console.log("Error", err))
-                .finally(() => setIsLoading(false));
+            setIsConfirmDialogOpen(true)
         },
     });
+
+    const submitForm = () => {
+        setIsLoading(true);
+        registerUserService(formikObj.values)
+            .then((res) => {
+                if (res.success) {
+                    alert("Registration Successful");
+                }
+            })
+            .catch((err) => console.log("Error", err))
+            .finally(() => setIsLoading(false));
+    }
 
     const handleLanguage = (e) => {
         const { value, checked } = e.target;
@@ -261,7 +267,7 @@ export default function RegistrationMUI() {
                         </CardBody>
                         <CardFooter>
                             <ButtonWithLoader
-                                onBtnClick={formikObj.handleSubmit}
+                                onBtnClick={() => formikObj.handleSubmit()}
                                 isLoading={isLoading}
                                 style="btn btn-primary"
                             >
@@ -271,6 +277,23 @@ export default function RegistrationMUI() {
                     </Card>
                 </div>
             </Container>
+
+            {isConfirmDialogOpen && (
+                <ConfirmDialog
+                    open={isConfirmDialogOpen}
+                    title={'Confirm Registration'}
+                    message={'Are you sure you want to register?'}
+                    onConfirm={() => {
+                        setIsConfirmDialogOpen(false);
+                        submitForm();
+                        formikObj.resetForm();
+                    }}
+                    onClose={() => setIsConfirmDialogOpen(false)}
+                    confirmText={'Yes'}
+                    cancelText={'No'}
+                />
+            )
+            }
         </Fragment>
     );
 }
